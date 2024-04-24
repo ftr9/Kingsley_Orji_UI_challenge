@@ -24,7 +24,7 @@ const MainPage = () => {
   };
 
   return (
-    <View style={{ marginTop: 50, padding: 10, flex: 1 }}>
+    <View style={{ padding: 10, flex: 1 }}>
       <Button title="increment" onPress={incrementHandle}></Button>
 
       <Button title="Decrement" onPress={decrementHandle}></Button>
