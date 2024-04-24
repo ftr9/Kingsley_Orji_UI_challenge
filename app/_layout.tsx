@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Slot } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,7 +52,14 @@ function RootLayoutNav() {
       }}
     >
       <StatusBar style="dark" backgroundColor="white" />
-      <Slot />
+
+      <GestureHandlerRootView
+        style={{
+          flex: 1,
+        }}
+      >
+        <Slot />
+      </GestureHandlerRootView>
     </SafeAreaView>
   );
 }
