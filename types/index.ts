@@ -10,3 +10,10 @@ export interface IProduct {
   imageSrc: any;
   category: string;
 }
+
+export interface Imenu {
+  name: string;
+  description: string;
+  image: any;
+  link: string;
+}

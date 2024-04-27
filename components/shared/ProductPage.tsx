@@ -7,7 +7,9 @@ import StackImage from '@/components/StackImage';
 import ActiveFoodIndicator from '@/components/ActiveFoodIndicator';
 import useActiveSelectedFoodStore from '@/store/ActiveSelectedFood.store';
 import { MovementDirection, IProduct } from '@/types';
-import Header from '@/components/Header';
+import Header from '@/components/shared/Header';
+import { useShallow } from 'zustand/react/shallow';
+import ProductPropSelection from '../ProductPropertySelection';
 
 interface IProductPageProps {
   products: IProduct[];
@@ -15,13 +17,22 @@ interface IProductPageProps {
 
 const ProductPage = ({ products }: IProductPageProps) => {
   const dragSharedValue = useSharedValue(30);
+  const isClickedSharedValue = useSharedValue(0);
+  const sizeSharedValue = useSharedValue(0);
+  const isAddedToCardSharedValue = useSharedValue(0);
 
-  const setIdAndDirectionAction = useActiveSelectedFoodStore(
-    store => store.setIdAndDirection
-  );
+  const [setIdAndDirectionAction, setTapStatusAndIdAction] =
+    useActiveSelectedFoodStore(
+      useShallow(store => [store.setIdAndDirection, store.setTapStatusAndId])
+    );
 
   useEffect(() => {
     setIdAndDirectionAction(2, MovementDirection.NEUTRAL);
+
+    return () => {
+      setIdAndDirectionAction(-1, MovementDirection.NEUTRAL);
+      setTapStatusAndIdAction(false, -1);
+    };
   }, []);
 
   return (
@@ -29,18 +40,27 @@ const ProductPage = ({ products }: IProductPageProps) => {
       <Header />
       <ActiveFoodIndicator products={products} />
       <View style={{ flex: 1 }}>
-        {products.map((milkshakes, index) => {
+        {products.map((product, index) => {
           return (
             <StackImage
               key={index}
               interpolationRange={generateInterpolationRange(index * 10)}
               dragSharedValue={dragSharedValue}
-              source={milkshakes.imageSrc}
+              source={product.imageSrc}
               productSize={products.length}
+              index={index}
+              isClickedSharedValue={isClickedSharedValue}
+              sizeSharedValue={sizeSharedValue}
+              isAddedToCardSharedValue={isAddedToCardSharedValue}
             />
           );
         })}
       </View>
+      <ProductPropSelection
+        isAddedToCardSharedValue={isAddedToCardSharedValue}
+        products={products}
+        sizeSharedValue={sizeSharedValue}
+      />
     </View>
   );
 };

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { MILK_SHAKES } from '@/constants/Data/MilkShakes';
 import ActiveFoodIndicatorName from './ActiveFoodIndicatorName';
 import ActiveFoodPrice from './ActiveFoodPrice';
 import { IProduct } from '@/types';
@@ -19,14 +18,16 @@ const ActiveFoodIndicator = ({ products }: IActiveFoodIndicator) => {
         paddingHorizontal: 10,
       }}
     >
-      {products.map((el, idx) => (
-        <ActiveFoodIndicatorName
-          key={`${idx}`}
-          category={el.category}
-          name={el.name}
-          id={idx}
-        />
-      ))}
+      <View style={{ flex: 1 }}>
+        {products.map((el, idx) => (
+          <ActiveFoodIndicatorName
+            key={`${idx}`}
+            category={el.category}
+            name={el.name}
+            id={idx}
+          />
+        ))}
+      </View>
 
       <ActiveFoodPrice products={products} />
     </View>

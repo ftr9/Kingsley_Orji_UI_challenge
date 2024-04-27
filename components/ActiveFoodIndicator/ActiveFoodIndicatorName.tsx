@@ -44,16 +44,16 @@ const ActiveFoodIndicatorName = ({
     store.direction,
   ]);
 
+  const enteringAnimation = getEnteringAnimationType(direction);
+  const exitingAnimation = getExitingAnimationType(direction);
+
   if (activeId !== id) {
     return null;
   }
 
   return (
     <>
-      <Animated.View
-        entering={getEnteringAnimationType(direction)}
-        exiting={getExitingAnimationType(direction)}
-      >
+      <Animated.View entering={enteringAnimation} exiting={exitingAnimation}>
         <Text
           style={{
             fontSize: 20,

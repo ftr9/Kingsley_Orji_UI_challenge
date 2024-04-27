@@ -22,7 +22,7 @@ const ActiveFoodPrice = ({ products }: IActiveFoodPrice) => {
       el => el.id === activeId
     );
 
-    if (flatListRef.current) {
+    if (flatListRef.current && activeProductIndex !== -1) {
       flatListRef.current.scrollToIndex({
         index: activeProductIndex,
         animated: true,
